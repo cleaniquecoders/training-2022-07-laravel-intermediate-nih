@@ -14,11 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        if(app()->environment() != 'production') {
+            \App\Models\User::factory(100)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            \App\Models\User::query()
+                ->inRandomOrder()
+                ->limit(rand(10,50))
+                ->get()
+                ->each(fn($user) => $user->update(['email_verified_at' => now()]));
+        }
     }
 }

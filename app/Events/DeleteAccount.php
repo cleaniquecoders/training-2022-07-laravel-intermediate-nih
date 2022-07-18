@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendAccountVerificationReminder
+class DeleteAccount
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,7 +22,6 @@ class SendAccountVerificationReminder
      */
     public function __construct(public User $user)
     {
-        //
     }
 
     /**

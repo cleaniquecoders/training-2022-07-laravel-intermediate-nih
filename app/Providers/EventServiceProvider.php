@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Listeners\SendNotificationToAdministrator;
 use App\Events\EmailVerified;
+use App\Events\DeleteAccount;
+use App\Listeners\DeleteUserAccount;
 use App\Events\SendAccountVerificationReminder;
 use App\Listeners\SendWelcomeNotification;
 use App\Listeners\SendPromotionCodeForNewComer;
@@ -33,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendAccountVerificationReminder::class => [
             SendEmailVerificationReminder::class,
+        ],
+        DeleteAccount::class => [
+            DeleteUserAccount::class,
         ],
     ];
 
