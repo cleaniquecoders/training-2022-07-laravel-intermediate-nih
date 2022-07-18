@@ -11,7 +11,9 @@ class ReloadDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'reload-db {--dev} {--demo}';
+    protected $signature = 'reload-db {name=mysql : Database connection} 
+                {--dev : Seed development data} 
+                {--demo : Seed demo data}';
 
     /**
      * The console command description.
@@ -27,7 +29,10 @@ class ReloadDatabase extends Command
      */
     public function handle()
     {
-        $this->callSilently('migrate:fresh', ['--seed' => true]);
+        $this->callSilently('migrate:fresh', [
+            '--database' => $this->argument('name'),
+            '--seed' => true
+        ]);
 
         if($this->option('dev')) {
             // seed dev seeder
