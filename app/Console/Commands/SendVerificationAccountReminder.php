@@ -34,15 +34,10 @@ class SendVerificationAccountReminder extends Command
 
         User::whereNull('email_verified_at')
             ->get()
-            ->each(function($user) {
+            ->each(function(User $user) {
                 $this->info('Send reminder to ' . $user->name);
-                // event(new SendVerificationAccountReminder($user));
-
-                // SendAccountVerificationReminder::dispatch($user);
-                $total_reminder_sent = rand(1,3);
-                SendAccountVerificationReminder::dispatchIf($total_reminder_sent < 3, $user);
-
-                DeleteAccount::dispatchIf($total_reminder_sent == 3, $user);
+                SendAccountVerificationReminder::dispatch($user);
+                $user->increment('total_reminders_sent');
             });
 
         return 0;
