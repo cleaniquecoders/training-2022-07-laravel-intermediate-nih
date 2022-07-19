@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\DeleteAccount;
+use App\Jobs\PruneUsersTableJob;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -30,10 +31,11 @@ class DeleteUserAccount extends Command
     public function handle()
     {
         $limit = $this->argument('limit');
-        User::whereNull('email_verified_at')
-            ->where('total_reminders_sent', '>=', $limit)
-            ->get()
-            ->each(fn($user) => DeleteAccount::dispatch($user));
+        
+        PruneUsersTableJob::dispatch($limit);
+
+        $this->info('Pruning users table job where total reminders has sent is equal or more than ' . $limit  . ' has been dispatched.');
+
         return 0;
     }
 }

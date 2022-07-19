@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Events\DeleteAccount;
 use App\Events\SendAccountVerificationReminder;
+use App\Jobs\SendAccountVerificationReminderJob;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -32,14 +33,9 @@ class SendVerificationAccountReminder extends Command
     {
         // probably only accept for x amount of reminder send
 
-        User::whereNull('email_verified_at')
-            ->get()
-            ->each(function(User $user) {
-                $this->info('Send reminder to ' . $user->name);
-                SendAccountVerificationReminder::dispatch($user);
-                $user->increment('total_reminders_sent');
-            });
-
+        SendAccountVerificationReminderJob::dispatch();
+        $this->info('Reminder job successfully created.');
+        
         return 0;
     }
 }
