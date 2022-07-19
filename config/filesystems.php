@@ -52,7 +52,7 @@ return [
             'throw' => false,
         ],
 
-        'public' => [
+        'assets' => [
             'driver' => 'local',
             'root' => storage_path('app/assets'),
             'url' => env('APP_URL').'/assets',
