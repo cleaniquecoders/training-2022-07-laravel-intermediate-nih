@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\ExportUser;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\User;
@@ -9,6 +10,16 @@ use App\Models\User;
 class UserDatatable extends DataTableComponent
 {
     protected $model = User::class;
+
+    public array $bulkActions = [
+        'exportSelected' => 'Export',
+    ];
+
+    public function exportSelected()
+    {
+        $selectedUsers = $this->getSelected();
+        return (new ExportUser($selectedUsers))->download('users.xlsx');
+    }
 
     public function configure(): void
     {
