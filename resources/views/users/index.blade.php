@@ -8,7 +8,7 @@
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="px-4 py-5 sm:p-6 bg-white shadow sm:rounded-lg">
-                <livewire:users />
+                <livewire:user-datatable />
             </div>
         </div>
     </div>
