@@ -18,4 +18,11 @@ class Users extends Component
     {
         return view('livewire.users');
     }
+
+    public function markAsVerified($id)
+    {
+        User::where('id', $id)->update([
+            'email_verified_at' => now(),
+        ]);
+    }
 }
