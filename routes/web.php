@@ -21,12 +21,14 @@ Route::get('/', function () {
 
 Route::middleware([
     'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
+    config('jetstream.auth_session')
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::view('/users', 'users.index')->name('user.index');
+    Route::view('/feedbacks', 'feedbacks')->name('feedbacks');
 });
 
 Route::get('/email/verify', function () {
